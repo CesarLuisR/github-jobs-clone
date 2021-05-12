@@ -15,3 +15,7 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+body {
+  background: #F6F7FB;
+}

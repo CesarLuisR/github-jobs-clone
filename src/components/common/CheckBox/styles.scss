@@ -1,0 +1,26 @@
+.check-box {
+  width: max-content;
+  height: 18px;
+  display: flex;
+  user-select: none;
+  cursor: pointer;
+
+  input {
+    width: 18px;
+    height: 100%;
+    margin: 0 12px;
+    outline: none;
+  }
+}
+
+.check-box__text {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: #334680;
+}
+
+.radio {
+  margin: 15px 0;
+}
