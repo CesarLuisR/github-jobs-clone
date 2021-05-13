@@ -1,0 +1,33 @@
+.view-changer {
+  margin-left: 12px;
+  border: 1px solid #b7bcce;
+  box-sizing: border-box;
+  border-radius: 4px;
+  width: 36px;
+  height: 36px;
+  font-family: Roboto;
+  font-size: 12px;
+  line-height: 14px;
+  color: #b9bdcf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background: #1e86ff;
+    border: 1px solid #1e86ff;
+    color: #ffffff;
+  }
+}
+
+.more {
+  border: none;
+
+  &:hover {
+    background: none;
+    border: none;
+    color: #1e86ff;
+  }
+}

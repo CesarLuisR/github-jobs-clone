@@ -1,6 +1,9 @@
 .app {
+  position: relative;
   width: 85%;
   margin: 0 auto;
+  padding-bottom: 195px;
+  min-height: 100vh;
 
   @media only screen and (max-width: 812px) {
     width: 95%;
