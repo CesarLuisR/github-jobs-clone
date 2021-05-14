@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.scss";
 import Header from "../../components/layout/Header";
 import SearchBar from "../../components/common/SearchBar";
 import SideBar from "../../components/layout/Sidebar";
-import JobCard from "../../components/common/JobCard";
 import useJobData from "../../components/hooks/useJobData";
 import ViewChanger from "../../components/common/ViewChanger";
 import Footer from "../../components/layout/Footer";
+import Main from "../../components/layout/Main";
+import { useDispatch } from "react-redux";
+import { getData } from "../../controller/action";
 
 const Home = () => {
-  console.log(useJobData());
+  const { jobs, locationError } = useJobData();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // console.log(jobs, locationError);
+
+    dispatch(getData(jobs));
+  }, [dispatch, jobs, locationError]);
 
   return (
     <div className="home">
@@ -23,22 +33,17 @@ const Home = () => {
       </div>
       <div className="sidebars-container">
         <SideBar />
-        <div className="main">
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
+        <Main data={jobs[0]}>
           <div className="sidebar__footer">
             <ViewChanger icon="chevron_left" />
             <ViewChanger text="1" />
             <ViewChanger text="2" />
             <ViewChanger text="3" />
             <ViewChanger icon="more_horiz" />
-            <ViewChanger text="10" />
+            <ViewChanger text={jobs.length} />
             <ViewChanger icon="chevron_right" />
           </div>
-        </div>
+        </Main>
       </div>
       <Footer />
     </div>

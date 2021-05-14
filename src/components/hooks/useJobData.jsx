@@ -15,15 +15,36 @@ const useJobData = (location, jobType) => {
         longitude: pos.coords.longitude,
       };
 
-      const specificUrl = `${cors}/https://jobs.github.com/positions.json?lat=${coords.latitude}&long=${coords.longitude}`;
-      const defaultUrl = `${cors}/https://jobs.github.com/positions.json?location=sf`;
+      const specificUrl = `${cors}/https://jobs.github.com/positions.json?lat=${coords.latitude}&long=${coords.longitude}&page=1`;
+      const defaultUrl = `${cors}/https://jobs.github.com/positions.json?location=USA&page=1`;
 
       const resp = await axios.get(specificUrl);
 
-      if (resp.data.length < 0) setJobs(resp.data);
-      else {
+      const pages = [];
+      let fragmentPage = 0;
+
+      const handlePagination = (data) => {
+        let fragment = [];
+        for (let i = 0; i < data.length; i++) {
+          fragment.push(data[i]);
+
+          fragmentPage++;
+          if (fragmentPage === 6) fragmentPage = 0;
+
+          if (fragmentPage === 0) {
+            pages.push(fragment);
+            fragment = [];
+          }
+        }
+      };
+
+      if (resp.data.length < 0) {
+        handlePagination(resp.data);
+        setJobs(pages);
+      } else {
         const data = await axios.get(defaultUrl);
-        setJobs(data.data);
+        handlePagination(data.data);
+        setJobs(pages);
       }
     };
 

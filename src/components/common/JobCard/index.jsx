@@ -4,6 +4,11 @@ import "./styles.scss";
 import IconInfo from "../IconInfo";
 
 const JobCard = (props) => {
+  const formatData = (data) => {
+    const splittedData = data.split(" ");
+    return `${splittedData[0]} ${splittedData[1]} ${splittedData[2] || ""}`;
+  };
+
   return (
     <div className="job-card">
       <div className="job-card__main">
@@ -15,8 +20,8 @@ const JobCard = (props) => {
         </div>
       </div>
       <div className="icons-zone">
-        <IconInfo icon="public" text={props.location} />
-        <IconInfo icon="schedule" text={props.date} />
+        <IconInfo icon="public" text={formatData(props.location)} />
+        <IconInfo icon="schedule" text={formatData(props.date)} />
       </div>
     </div>
   );
