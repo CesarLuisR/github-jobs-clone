@@ -1,0 +1,10 @@
+.job-page {
+  display: grid;
+  grid-template-columns: 231px 1fr;
+  column-gap: 77px;
+  row-gap: 36px;
+
+  @media only screen and (max-width: 812px) {
+    grid-template-columns: 1fr;
+  }
+}

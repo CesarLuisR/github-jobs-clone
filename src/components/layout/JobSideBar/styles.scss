@@ -1,0 +1,61 @@
+.job-sidebar {
+  max-width: 95vw;
+  position: sticky;
+  top: 30px;
+  height: max-content;
+
+  @media only screen and (max-width: 812px) {
+    position: static;
+  }
+}
+
+.go-back {
+  max-width: 95vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: #1e86ff;
+  text-decoration: none;
+
+  .arrow {
+    padding-left: 15px;
+    transform: rotate(180deg);
+  }
+
+  &:hover {
+    color: #1863b9;
+  }
+}
+
+.how-to-apply {
+  margin-top: 36px;
+
+  .title {
+    font-family: Poppins;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 21px;
+    text-transform: uppercase;
+    color: #b9bdcf;
+  }
+
+  .text {
+    max-width: 95vw;
+    margin-top: 16px;
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #334680;
+    overflow: hidden;
+
+    a {
+      text-decoration: none;
+      color: #1e86ff;
+    }
+  }
+}

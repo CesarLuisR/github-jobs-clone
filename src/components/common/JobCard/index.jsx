@@ -5,12 +5,12 @@ import IconInfo from "../IconInfo";
 import { Link } from "react-router-dom";
 
 const JobCard = (props) => {
-  const formatData = (data) => {
+  function formatData(data) {
     const splittedData = data.split(" ");
     return `${splittedData[0]} ${splittedData[1] || ""} ${
       splittedData[2] || ""
     }`;
-  };
+  }
 
   return (
     <div className="job-card">
