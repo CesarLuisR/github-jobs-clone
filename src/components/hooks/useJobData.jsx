@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useJobData = (location, jobType) => {
-  const [jobs, setJobs] = useState([]);
+const useJobData = (id, jobType) => {
+  const [data, setData] = useState([]);
   const [locationError, setLocationError] = useState(false);
 
   const cors = "https://cors-anywhere.herokuapp.com";
@@ -10,16 +10,6 @@ const useJobData = (location, jobType) => {
 
   useEffect(() => {
     const position = async (pos) => {
-      const coords = {
-        latitude: pos.coords.latitude,
-        longitude: pos.coords.longitude,
-      };
-
-      const specificUrl = `${cors}/https://jobs.github.com/positions.json?lat=${coords.latitude}&long=${coords.longitude}&page=1`;
-      const defaultUrl = `${cors}/https://jobs.github.com/positions.json?location=USA&page=1`;
-
-      const resp = await axios.get(specificUrl);
-
       const pages = [];
       let fragmentPage = 0;
 
@@ -38,13 +28,31 @@ const useJobData = (location, jobType) => {
         }
       };
 
+      if (id) {
+        return axios
+          .get(`${cors}/https://jobs.github.com/positions.json?${id}`)
+          .then((resp) =>
+            resp.data.forEach((job) => job.id === id && setData(job))
+          );
+      }
+
+      const coords = {
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+      };
+
+      const specificUrl = `${cors}/https://jobs.github.com/positions.json?lat=${coords.latitude}&long=${coords.longitude}&page=1`;
+      const defaultUrl = `${cors}/https://jobs.github.com/positions.json?location=USA&page=1`;
+
+      const resp = await axios.get(specificUrl);
+
       if (resp.data.length < 0) {
         handlePagination(resp.data);
-        setJobs(pages);
+        setData(pages);
       } else {
         const data = await axios.get(defaultUrl);
         handlePagination(data.data);
-        setJobs(pages);
+        setData(pages);
       }
     };
 
@@ -55,9 +63,9 @@ const useJobData = (location, jobType) => {
     };
 
     navigator.geolocation.getCurrentPosition(position, error, options);
-  }, []);
+  }, [id]);
 
-  return { jobs, locationError };
+  return { data, locationError };
 };
 
 export default useJobData;

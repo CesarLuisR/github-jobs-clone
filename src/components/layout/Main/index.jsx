@@ -1,11 +1,14 @@
 import React from "react";
 import JobCard from "../../common/JobCard";
+import { useSelector } from "react-redux";
 
-const Main = (props) => {
+const Main = ({ children, page }) => {
+  const data = useSelector((store) => store);
+
   return (
     <div className="main">
-      {props.data && (
-        props.data.map((job, index) => (
+      {data.reducer.data[page - 1] &&
+        data.reducer.data[page - 1].map((job, index) => (
           <JobCard
             key={index}
             bussines={job.company}
@@ -14,10 +17,10 @@ const Main = (props) => {
             type={job.type}
             location={job.location}
             date={job.created_at}
+            id={job.id}
           />
-        ))
-      )}
-      {props.children}
+        ))}
+      {children}
     </div>
   );
 };

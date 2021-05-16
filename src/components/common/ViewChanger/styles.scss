@@ -14,11 +14,12 @@
   align-items: center;
   cursor: pointer;
   transition: 0.3s;
+  text-decoration: none;
+  user-select: none;
 
   &:hover {
-    background: #1e86ff;
     border: 1px solid #1e86ff;
-    color: #ffffff;
+    color: #1e86ff;
   }
 }
 
@@ -26,8 +27,25 @@
   border: none;
 
   &:hover {
-    background: none;
     border: none;
     color: #1e86ff;
   }
 }
+
+.disabled {
+  &:hover {
+    border: none;
+    color: #b7bcce;
+  }
+}
+
+.active {
+  background: #1e86ff;
+  color: #ffffff;
+
+  &:hover {
+    color: #ffffff !important;
+  }
+}
+
+

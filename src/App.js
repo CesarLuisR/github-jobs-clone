@@ -5,18 +5,26 @@ import NotFound from "./views/NotFound";
 import "./styles/App.scss";
 import { Provider } from "react-redux";
 import generateStore from "./controller/store";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
 const App = () => {
   const store = generateStore();
 
   return (
     <Router>
-      <div className="app">
+      <div className="app" id="top">
         <Provider store={store}>
           <Switch>
-            <Route path="/job" component={JobPage} />
-            <Route exact path="/" component={Home} />
+            <Route path="/job/:id" component={JobPage} />
+            <Route exact path="/">
+              <Redirect to="/default/1" />
+            </Route>
+            <Route path="/:search/:page" component={Home} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Provider>

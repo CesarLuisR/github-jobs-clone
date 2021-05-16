@@ -8,18 +8,19 @@ import ViewChanger from "../../components/common/ViewChanger";
 import Footer from "../../components/layout/Footer";
 import Main from "../../components/layout/Main";
 import { useDispatch } from "react-redux";
-import { getData } from "../../controller/action";
+import { getData, getError } from "../../controller/action";
+import { useParams } from "react-router-dom";
 
 const Home = () => {
-  const { jobs, locationError } = useJobData();
+  const { data, locationError } = useJobData();
+  const { page } = useParams();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log(jobs, locationError);
-
-    dispatch(getData(jobs));
-  }, [dispatch, jobs, locationError]);
+    dispatch(getData(data));
+    dispatch(getError(locationError));
+  }, [dispatch, data, locationError]);
 
   return (
     <div className="home">
@@ -33,15 +34,27 @@ const Home = () => {
       </div>
       <div className="sidebars-container">
         <SideBar />
-        <Main data={jobs[0]}>
+        <Main page={page}>
           <div className="sidebar__footer">
-            <ViewChanger icon="chevron_left" />
-            <ViewChanger text="1" />
-            <ViewChanger text="2" />
-            <ViewChanger text="3" />
-            <ViewChanger icon="more_horiz" />
-            <ViewChanger text={jobs.length} />
-            <ViewChanger icon="chevron_right" />
+            <ViewChanger page={page} max={data.length} icon="chevron_left" />
+            <ViewChanger
+              page={page}
+              max={data.length}
+              text={Number(page) <= 3 ? "1" : Number(page) - 2}
+            />
+            <ViewChanger
+              page={page}
+              max={data.length}
+              text={Number(page) <= 3 ? "2" : Number(page) - 1}
+            />
+            <ViewChanger
+              page={page}
+              max={data.length}
+              text={Number(page) <= 3 ? "3" : page}
+            />
+            <ViewChanger page={page} max={data.length} icon="more_horiz" />
+            <ViewChanger page={page} max={data.length} text={data.length} />
+            <ViewChanger page={page} max={data.length} icon="chevron_right" />
           </div>
         </Main>
       </div>
