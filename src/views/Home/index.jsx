@@ -1,4 +1,7 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getData, getError } from "../../controller/action";
+import { useParams } from "react-router-dom";
 import "./styles.scss";
 import Header from "../../components/layout/Header";
 import SearchBar from "../../components/common/SearchBar";
@@ -7,9 +10,6 @@ import useJobData from "../../components/hooks/useJobData";
 import ViewChanger from "../../components/common/ViewChanger";
 import Footer from "../../components/layout/Footer";
 import Main from "../../components/layout/Main";
-import { useDispatch } from "react-redux";
-import { getData, getError } from "../../controller/action";
-import { useParams } from "react-router-dom";
 
 const Home = () => {
   const { data, locationError } = useJobData();

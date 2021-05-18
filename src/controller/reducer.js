@@ -4,8 +4,6 @@ const initialState = {
   data: [],
   error: null,
   search: "",
-  page: 0,
-  selected: null,
 };
 
 const reducer = (state = initialState, action) => {

@@ -1,13 +1,14 @@
 import React from "react";
 import JobCard from "../../common/JobCard";
 import { useSelector } from "react-redux";
+import Spinner from "../../common/Spinner";
 
 const Main = ({ children, page }) => {
   const data = useSelector((store) => store);
 
   return (
     <div className="main">
-      {data.reducer.data[page - 1] &&
+      {data.reducer.data[page - 1] ? (
         data.reducer.data[page - 1].map((job, index) => (
           <JobCard
             key={index}
@@ -19,7 +20,10 @@ const Main = ({ children, page }) => {
             date={job.created_at}
             id={job.id}
           />
-        ))}
+        ))
+      ) : (
+        <Spinner />
+      )}
       {children}
     </div>
   );

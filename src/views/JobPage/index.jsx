@@ -7,6 +7,7 @@ import JobSideBar from "../../components/layout/JobSideBar";
 import useJobData from "../../components/hooks/useJobData";
 import Parser from "html-react-parser";
 import JobMain from "../../components/layout/JobMain";
+import Spinner from "../../components/common/Spinner";
 
 const JobPage = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const JobPage = () => {
   return (
     <div className="container">
       <Header />
+      {!data.how_to_apply && <Spinner />}
       <div className="job-page">
         {data.how_to_apply && (
           <>
