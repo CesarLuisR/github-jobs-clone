@@ -1,6 +1,9 @@
 // Consts
 export const GET_DATA = "GET_DATA";
 export const GET_ERROR = "GET_ERROR";
+export const SET_FULLTIME = "SET_FULLTIME";
+export const SET_LOCATION = "SET_LOCATION";
+export const SET_SEARCH = "SET_SEARCH";
 
 // Actions
 export const getData = (data) => (dispatch) => {
@@ -14,5 +17,19 @@ export const getError = (error) => (dispatch) => {
   dispatch({
     type: GET_ERROR,
     payload: error,
+  });
+};
+
+export const setFullTime = (data) => (dispatch) => {
+  dispatch({
+    type: SET_FULLTIME,
+    payload: data,
+  });
+};
+
+export const setLocation = (location) => (dispatch) => {
+  dispatch({
+    type: SET_LOCATION,
+    payload: location,
   });
 };

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useJobData = (id, jobType) => {
+const useJobData = (id, fulltime, location, change) => {
   const [data, setData] = useState([]);
   const [locationError, setLocationError] = useState(false);
 
@@ -11,17 +11,17 @@ const useJobData = (id, jobType) => {
   useEffect(() => {
     const position = async (pos) => {
       const pages = [];
-      let fragmentPage = 0;
+      let fragmentSize = 0;
 
       const handlePagination = (data) => {
         let fragment = [];
         for (let i = 0; i < data.length; i++) {
           fragment.push(data[i]);
 
-          fragmentPage++;
-          if (fragmentPage === 6) fragmentPage = 0;
+          fragmentSize++;
+          if (fragmentSize === 6) fragmentSize = 0;
 
-          if (fragmentPage === 0) {
+          if (fragmentSize === 0) {
             pages.push(fragment);
             fragment = [];
           }
@@ -41,8 +41,13 @@ const useJobData = (id, jobType) => {
         longitude: pos.coords.longitude,
       };
 
-      const specificUrl = `${cors}/https://jobs.github.com/positions.json?lat=${coords.latitude}&long=${coords.longitude}&page=1`;
-      const defaultUrl = `${cors}/https://jobs.github.com/positions.json?location=USA&page=1`;
+      const specificUrl = `${cors}/https://jobs.github.com/positions.json?lat=${
+        coords.latitude
+      }&long=${coords.longitude}&page=1${fulltime ? "&full_time" : ""}`;
+
+      const defaultUrl = `${cors}/https://jobs.github.com/positions.json?location=USA&page=1${
+        fulltime ? "&full_time" : ""
+      }`;
 
       const resp = await axios.get(specificUrl);
 
@@ -50,9 +55,13 @@ const useJobData = (id, jobType) => {
         handlePagination(resp.data);
         setData(pages);
       } else {
-        const data = await axios.get(defaultUrl);
-        handlePagination(data.data);
-        setData(pages);
+        try {
+          const data = await axios.get(defaultUrl);
+          handlePagination(data.data);
+          setData(pages);
+        } catch (err) {
+          setLocationError(true);
+        }
       }
     };
 
@@ -63,7 +72,7 @@ const useJobData = (id, jobType) => {
     };
 
     navigator.geolocation.getCurrentPosition(position, error, options);
-  }, [id]);
+  }, [id, fulltime, locationError]);
 
   return { data, locationError };
 };

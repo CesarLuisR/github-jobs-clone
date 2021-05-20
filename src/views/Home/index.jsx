@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getData, getError } from "../../controller/action";
 import { useParams } from "react-router-dom";
 import "./styles.scss";
@@ -12,8 +12,11 @@ import Footer from "../../components/layout/Footer";
 import Main from "../../components/layout/Main";
 
 const Home = () => {
-  const { data, locationError } = useJobData();
+  const store = useSelector((store) => store.reducer);
+  const { data, locationError } = useJobData(false, store.fulltime, false, store);
   const { page } = useParams();
+
+  console.log(store);
 
   const dispatch = useDispatch();
 
@@ -63,4 +66,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default React.memo(Home);

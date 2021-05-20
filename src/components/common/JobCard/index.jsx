@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const JobCard = (props) => {
   function formatData(data) {
+    if (!data) return "";
     const splittedData = data.split(" ");
     return `${splittedData[0]} ${splittedData[1] || ""} ${
       splittedData[2] || ""
