@@ -4,6 +4,7 @@ export const GET_ERROR = "GET_ERROR";
 export const SET_FULLTIME = "SET_FULLTIME";
 export const SET_LOCATION = "SET_LOCATION";
 export const SET_SEARCH = "SET_SEARCH";
+export const CLEAR = "CLEAR";
 
 // Actions
 export const getData = (data) => (dispatch) => {
@@ -31,5 +32,19 @@ export const setLocation = (location) => (dispatch) => {
   dispatch({
     type: SET_LOCATION,
     payload: location,
+  });
+};
+
+export const setSearch = (search) => (dispatch) => {
+  dispatch({
+    type: SET_SEARCH,
+    payload: search,
+  });
+};
+
+export const Clear = () => (dispatch) => {
+  dispatch({
+    type: CLEAR,
+    payload: [],
   });
 };

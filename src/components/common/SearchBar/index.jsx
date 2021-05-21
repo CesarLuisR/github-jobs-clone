@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import "./styles.scss";
+import { useDispatch } from "react-redux";
+import { setSearch, Clear } from "../../../controller/action";
 
 const SearchBar = (props) => {
   const [inputData, setInputData] = useState();
   const handleChange = (e) => setInputData(e.target.value);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.target.reset();
+    if (!props.fullwidth) {
+      dispatch(Clear());
+      dispatch(setSearch(inputData));
+      setInputData("");
+    }
   };
 
   return (

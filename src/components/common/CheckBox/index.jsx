@@ -1,15 +1,18 @@
 import React from "react";
 import "./styles.scss";
-import { setFullTime, setLocation } from "../../../controller/action";
+import { setFullTime, setLocation, Clear } from "../../../controller/action";
 import { useDispatch } from "react-redux";
 
 const CheckBox = (props) => {
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    props.type === "radio"
-      ? dispatch(setLocation(e.target.value))
-      : dispatch(setFullTime(e.target.checked));
+    if (props.type === "radio") {
+      dispatch(setLocation(e.target.value));
+    } else {
+      dispatch(Clear());
+      dispatch(setFullTime(e.target.checked));
+    }
   };
 
   return (

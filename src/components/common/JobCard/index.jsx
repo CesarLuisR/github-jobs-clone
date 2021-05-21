@@ -16,7 +16,7 @@ const JobCard = (props) => {
   return (
     <div className="job-card">
       <div className="job-card__main">
-        <img src={props.image} alt={props.jobName} />
+        <img src={props.image} alt={props.bussines} />
 
         <div className="job-card__info">
           <div className="bussines-name">{props.bussines}</div>

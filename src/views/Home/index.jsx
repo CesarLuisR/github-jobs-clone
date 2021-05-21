@@ -13,10 +13,8 @@ import Main from "../../components/layout/Main";
 
 const Home = () => {
   const store = useSelector((store) => store.reducer);
-  const { data, locationError } = useJobData(false, store.fulltime, false, store);
+  const { data, locationError } = useJobData(false, store.fulltime, store.location, store.search);
   const { page } = useParams();
-
-  console.log(store);
 
   const dispatch = useDispatch();
 

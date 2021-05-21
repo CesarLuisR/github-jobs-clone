@@ -1,4 +1,11 @@
-import { GET_DATA, GET_ERROR, SET_FULLTIME, SET_LOCATION } from "./action";
+import {
+  GET_DATA,
+  GET_ERROR,
+  SET_FULLTIME,
+  SET_LOCATION,
+  SET_SEARCH,
+  CLEAR,
+} from "./action";
 
 const initialState = {
   data: [],
@@ -21,6 +28,12 @@ const reducer = (state = initialState, action) => {
 
     case SET_LOCATION:
       return { ...state, location: action.payload };
+
+    case SET_SEARCH:
+      return { ...state, search: action.payload };
+
+    case CLEAR:
+      return { ...state, data: [] };
 
     default:
       return state;
