@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import "./styles.scss";
 import { useDispatch } from "react-redux";
-import { setSearch, Clear } from "../../../controller/action";
+import {
+  setSearch,
+  setSearchLocation,
+  Clear,
+} from "../../../controller/action";
 
 const SearchBar = (props) => {
   const [inputData, setInputData] = useState();
-  const handleChange = (e) => setInputData(e.target.value);
   const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    setInputData(e.target.value);
+    dispatch(setSearchLocation(e.target.value));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();

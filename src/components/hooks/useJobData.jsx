@@ -5,19 +5,15 @@ const useJobData = (id, fulltime, location, search) => {
   const [data, setData] = useState([]);
   const [locationError, setLocationError] = useState(false);
 
-  console.log("LLEGO HASTA AQUI 1");
-
   const cors = "https://cors-anywhere.herokuapp.com";
   const error = (err) => setLocationError(err);
 
   useEffect(() => {
     const position = async (pos) => {
-      console.log("LLEGO HASTA AQUI 2");
       const pages = [];
       let fragmentSize = 0;
 
       const handlePagination = (data) => {
-        console.log("LLEGO HASTA AQUI PAGINATION");
         let fragment = [];
         for (let i = 0; i < data.length; i++) {
           fragment.push(data[i]);
@@ -46,10 +42,22 @@ const useJobData = (id, fulltime, location, search) => {
       };
 
       if (search !== "") {
-        console.log("XD");
         return axios
           .get(
             `${cors}/https://jobs.github.com/positions.json?search=${search}`
+          )
+          .then((resp) => {
+            handlePagination(FullTimeFilter(resp.data));
+            setData(pages);
+          });
+      }
+
+      if (location !== "") {
+        return axios
+          .get(
+            `${cors}/https://jobs.github.com/positions.json?location=${location}${
+              search && `&search=${search}`
+            }`
           )
           .then((resp) => {
             handlePagination(FullTimeFilter(resp.data));
@@ -66,8 +74,6 @@ const useJobData = (id, fulltime, location, search) => {
       const defaultUrl = `${cors}/https://jobs.github.com/positions.json?location=USA`;
 
       const resp = await axios.get(specificUrl);
-
-      console.log("FINAL");
 
       if (resp.data.length < 0) {
         handlePagination(FullTimeFilter(resp.data));
@@ -91,7 +97,7 @@ const useJobData = (id, fulltime, location, search) => {
     };
 
     navigator.geolocation.getCurrentPosition(position, error, options);
-  }, [id, fulltime, locationError, search]);
+  }, [id, fulltime, locationError, search, location]);
 
   return { data, locationError };
 };

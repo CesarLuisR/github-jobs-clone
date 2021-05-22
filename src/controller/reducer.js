@@ -3,6 +3,7 @@ import {
   GET_ERROR,
   SET_FULLTIME,
   SET_LOCATION,
+  SET_SEARCH_LOCATION,
   SET_SEARCH,
   CLEAR,
 } from "./action";
@@ -12,6 +13,7 @@ const initialState = {
   error: null,
   fulltime: false,
   location: "",
+  searchLocation: "",
   search: "",
 };
 
@@ -28,6 +30,9 @@ const reducer = (state = initialState, action) => {
 
     case SET_LOCATION:
       return { ...state, location: action.payload };
+
+    case SET_SEARCH_LOCATION:
+      return { ...state, searchLocation: action.payload };
 
     case SET_SEARCH:
       return { ...state, search: action.payload };
