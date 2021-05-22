@@ -4,11 +4,14 @@ import axios from "axios";
 const useJobData = (id, fulltime, location, search) => {
   const [data, setData] = useState([]);
   const [locationError, setLocationError] = useState(false);
+  const [noResultsFound, setNoResultsFound] = useState(false);
 
   const cors = "https://cors-anywhere.herokuapp.com";
-  const error = (err) => setLocationError(err);
+  const error = () => setLocationError(true);
 
   useEffect(() => {
+    setNoResultsFound(false);
+
     const position = async (pos) => {
       const pages = [];
       let fragmentSize = 0;
@@ -44,9 +47,12 @@ const useJobData = (id, fulltime, location, search) => {
       if (search !== "") {
         return axios
           .get(
-            `${cors}/https://jobs.github.com/positions.json?search=${search}`
+            `${cors}/https://jobs.github.com/positions.json?search=${search}${
+              location && `&location=${location}`
+            }`
           )
           .then((resp) => {
+            if (resp.data.length === 0) setNoResultsFound(true);
             handlePagination(FullTimeFilter(resp.data));
             setData(pages);
           });
@@ -84,7 +90,6 @@ const useJobData = (id, fulltime, location, search) => {
           handlePagination(FullTimeFilter(data.data));
           setData(pages);
         } catch (err) {
-          console.log(err);
           setLocationError(true);
         }
       }
@@ -99,7 +104,7 @@ const useJobData = (id, fulltime, location, search) => {
     navigator.geolocation.getCurrentPosition(position, error, options);
   }, [id, fulltime, locationError, search, location]);
 
-  return { data, locationError };
+  return { data, locationError, noResultsFound };
 };
 
 export default useJobData;

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const JobSideBar = (props) => {
   return (
     <div className="job-sidebar">
-      <Link to="/default/1" className="go-back">
+      <Link to="/1" className="go-back">
         <span className="material-icons arrow">trending_flat</span>
         Back to search
       </Link>

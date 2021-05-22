@@ -5,7 +5,6 @@ import "./styles.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setLocation, Clear } from "../../../controller/action";
 import useLocationMatches from "../../hooks/useLocationMatches";
-import Spinner from "../../common/Spinner";
 
 const SideBar = () => {
   const dispatch = useDispatch();

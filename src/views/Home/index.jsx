@@ -13,7 +13,12 @@ import Main from "../../components/layout/Main";
 
 const Home = () => {
   const store = useSelector((store) => store.reducer);
-  const { data, locationError } = useJobData(false, store.fulltime, store.location, store.search);
+  const { data, locationError, noResultsFound } = useJobData(
+    false,
+    store.fulltime,
+    store.location,
+    store.search
+  );
   const { page } = useParams();
 
   const dispatch = useDispatch();
@@ -22,6 +27,8 @@ const Home = () => {
     dispatch(getData(data));
     dispatch(getError(locationError));
   }, [dispatch, data, locationError]);
+
+  console.log(noResultsFound, store.error);
 
   return (
     <div className="home">
@@ -35,29 +42,36 @@ const Home = () => {
       </div>
       <div className="sidebars-container">
         <SideBar />
-        <Main page={page}>
-          <div className="sidebar__footer">
-            <ViewChanger page={page} max={data.length} icon="chevron_left" />
-            <ViewChanger
-              page={page}
-              max={data.length}
-              text={Number(page) <= 3 ? "1" : Number(page) - 2}
-            />
-            <ViewChanger
-              page={page}
-              max={data.length}
-              text={Number(page) <= 3 ? "2" : Number(page) - 1}
-            />
-            <ViewChanger
-              page={page}
-              max={data.length}
-              text={Number(page) <= 3 ? "3" : page}
-            />
-            <ViewChanger page={page} max={data.length} icon="more_horiz" />
-            <ViewChanger page={page} max={data.length} text={data.length} />
-            <ViewChanger page={page} max={data.length} icon="chevron_right" />
+        {noResultsFound || store.error ? (
+          <div className="error">
+            {noResultsFound && "No results found"}{" "}
+            {store.error && "An error occurred"}
           </div>
-        </Main>
+        ) : (
+          <Main page={page}>
+            <div className="sidebar__footer">
+              <ViewChanger page={page} max={data.length} icon="chevron_left" />
+              <ViewChanger
+                page={page}
+                max={data.length}
+                text={Number(page) <= 3 ? "1" : Number(page) - 2}
+              />
+              <ViewChanger
+                page={page}
+                max={data.length}
+                text={Number(page) <= 3 ? "2" : Number(page) - 1}
+              />
+              <ViewChanger
+                page={page}
+                max={data.length}
+                text={Number(page) <= 3 ? "3" : page}
+              />
+              <ViewChanger page={page} max={data.length} icon="more_horiz" />
+              <ViewChanger page={page} max={data.length} text={data.length} />
+              <ViewChanger page={page} max={data.length} icon="chevron_right" />
+            </div>
+          </Main>
+        )}
       </div>
       <Footer />
     </div>

@@ -13,7 +13,7 @@ const SearchBar = (props) => {
 
   const handleChange = (e) => {
     setInputData(e.target.value);
-    dispatch(setSearchLocation(e.target.value));
+    if (props.fullwidth) dispatch(setSearchLocation(e.target.value));
   };
 
   const handleSubmit = (e) => {

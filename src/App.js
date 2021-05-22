@@ -22,9 +22,9 @@ const App = () => {
           <Switch>
             <Route path="/job/:id" component={JobPage} />
             <Route exact path="/">
-              <Redirect to="/default/1" />
+              <Redirect to="/1" />
             </Route>
-            <Route path="/:search/:page" component={Home} />
+            <Route path="/:page" component={Home} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Provider>

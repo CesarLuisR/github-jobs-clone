@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.scss";
 import { NavLink } from "react-router-dom";
 
-const ViewChanger = ({ icon, text, max, page = 1, search = "default" }) => {
+const ViewChanger = ({ icon, text, max, page = 1 }) => {
   let disabled = false;
 
   const handleChangerPage = () => {
@@ -29,7 +29,7 @@ const ViewChanger = ({ icon, text, max, page = 1, search = "default" }) => {
 
   return (
     <NavLink
-      to={`/${search}/${handleChangerPage()}`}
+      to={`/${handleChangerPage()}`}
       activeClassName={!icon ? "active" : "none"}
       className={`view-changer ${icon === "more_horiz" && "more"} ${
         disabled && "disabled"
